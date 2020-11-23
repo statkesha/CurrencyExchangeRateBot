@@ -37,7 +37,7 @@ bot.hears(/^[A-Z]+$/i, async(ctx) => {
             try{
                 const currObj=await axios.get('https://developerhub.alfabank.by:8273/partner/1.0.0/public/nationalRates')
            const foundCurrency = currObj.data.rates.find((cur)=>{
-         return cur.iso === ctx.message.text;
+         return cur.code.toString() === currency.number;
         });
            // !foundCurrency.sellRate || !foundCurrency.buyRate
         if(!foundCurrency.rate){
@@ -45,7 +45,7 @@ bot.hears(/^[A-Z]+$/i, async(ctx) => {
         }
         return ctx.replyWithMarkdown(`
         Валюта: ${foundCurrency.quantity} ${foundCurrency.name.toString()}
-        Курс на сегодня: *${foundCurrency.rate}* `);
+Курс на сегодня: *${foundCurrency.rate}* `);
         }catch(error){
             return ctx.reply(error)
          }
